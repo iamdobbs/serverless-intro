@@ -1,16 +1,18 @@
+// uuid will provide id. aws-sdk will provide dynamodb access
 const { v4 } = require("uuid");
 const AWS = require("aws-sdk");
 
 const addTodo = async (event) => {
-  const dynamodb = AWS.DynamoDB.DocumentClient();
+  const dynamodb = AWS.DynamoDB.DocumentClient(); // declare dynamodb
 
-  const { todo } = JSON.parse(event.body);
+  const { todo } = JSON.parse(event.body); // define relevant todo variables
   const createdAT = new Date();
   const id = v4();
 
-  console.log("This is an id", id)
+  console.log("This is an id", id);
 
   const newTodo = {
+    // declare todo object and its properties
     id,
     todo,
     createdAt,
@@ -18,6 +20,7 @@ const addTodo = async (event) => {
   };
 
   await dynamodb.put({
+    // async for dynamo to 'put' to the TodoTable the 'Item' which is the newTodo object
     TableName: "TodoTable",
     Item: newTodo,
   });
