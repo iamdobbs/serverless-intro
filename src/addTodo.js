@@ -6,7 +6,7 @@ const addTodo = async (event) => {
   const dynamodb = new AWS.DynamoDB.DocumentClient(); // declare dynamodb
 
   const { todo } = JSON.parse(event.body); // define relevant todo variables
-  const createdAt = new Date();
+  const createdAt = new Date().toISOString();
   const id = v4();
 
   console.log("This is an id", id);
