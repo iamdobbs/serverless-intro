@@ -18,7 +18,7 @@ functions:
     events:
       - httpApi:
           path: /
-          method: get
+          method: post
 
 resources:
   Resources:
