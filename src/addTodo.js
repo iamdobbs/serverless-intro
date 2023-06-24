@@ -1,15 +1,15 @@
 // uuid will provide id. aws-sdk will provide dynamodb access
 const { v4 } = require("uuid");
 const AWS = require("aws-sdk");
+const middy = require("@middy/core");
+const httpJsonBodyParser = require("@middy/http-json-body-parser");
 
 const addTodo = async (event) => {
   const dynamodb = new AWS.DynamoDB.DocumentClient(); // declare dynamodb
 
-  const { todo } = JSON.parse(event.body); // define relevant todo variables
+  const { todo } = event.body; // define relevant todo variables
   const createdAt = new Date().toISOString();
   const id = v4();
-
-  console.log("This is an id", id);
 
   const newTodo = {
     // declare todo object and its properties
@@ -34,5 +34,5 @@ const addTodo = async (event) => {
 };
 
 module.exports = {
-  handler: addTodo,
+  handler: middy(addTodo).use(httpJsonBodyParser()),
 };
