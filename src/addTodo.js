@@ -6,7 +6,7 @@ const addTodo = async (event) => {
   const dynamodb = new AWS.DynamoDB.DocumentClient(); // declare dynamodb
 
   const { todo } = JSON.parse(event.body); // define relevant todo variables
-  const createdAT = new Date();
+  const createdAt = new Date();
   const id = v4();
 
   console.log("This is an id", id);
@@ -19,11 +19,13 @@ const addTodo = async (event) => {
     completed: false,
   };
 
-  await dynamodb.put({
-    // async for dynamo to 'put' to the TodoTable the 'Item' which is the newTodo object
-    TableName: "TodoTable",
-    Item: newTodo,
-  });
+  await dynamodb
+    .put({
+      // async for dynamo to 'put' to the TodoTable the 'Item' which is the newTodo object
+      TableName: "TodoTable",
+      Item: newTodo,
+    })
+    .promise();
 
   return {
     statusCode: 200,
