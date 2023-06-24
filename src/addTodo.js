@@ -3,7 +3,7 @@ const { v4 } = require("uuid");
 const AWS = require("aws-sdk");
 
 const addTodo = async (event) => {
-  const dynamodb = AWS.DynamoDB.DocumentClient(); // declare dynamodb
+  const dynamodb = new AWS.DynamoDB.DocumentClient(); // declare dynamodb
 
   const { todo } = JSON.parse(event.body); // define relevant todo variables
   const createdAT = new Date();
